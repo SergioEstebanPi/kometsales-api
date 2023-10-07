@@ -52,6 +52,11 @@ password: NA
 <img width="456" alt="image" src="https://github.com/SergioEstebanPi/kometsales-api/assets/17394456/58cda0bf-8a92-4872-94d7-4912297757ab">
 
 
+## Model Entidad Relación
+
+![kometsales_ERdiagram](https://github.com/SergioEstebanPi/kometsales-api/assets/17394456/45df37ac-2aaf-453a-8ea8-f5dcb4898c9c)
+
+
 ## Table showing the finalFreight results
 
 <img width="279" alt="image" src="https://github.com/SergioEstebanPi/kometsales-api/assets/17394456/c1184747-efca-4720-abfb-aaf0680abec0">
