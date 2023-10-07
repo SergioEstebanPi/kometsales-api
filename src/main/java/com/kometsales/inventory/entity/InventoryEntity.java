@@ -1,19 +1,18 @@
 package com.kometsales.inventory.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Getter
-@Setter
+@Data
+@Builder
 @Table(name = "tblinventorypt", catalog = "kometsales")
 @NoArgsConstructor
+@AllArgsConstructor
 public class InventoryEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)

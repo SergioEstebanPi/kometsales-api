@@ -1,6 +1,8 @@
 package com.kometsales.inventory.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +12,10 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
+@Builder
 @Table(name = "tblcustomerpt", catalog = "kometsales")
 @NoArgsConstructor
+@AllArgsConstructor
 public class CustomerEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)

@@ -2,6 +2,8 @@ package com.kometsales.inventory.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,8 +15,10 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Data
+@Builder
 @Table(name = "tblboxtypept", catalog = "kometsales")
 @NoArgsConstructor
+@AllArgsConstructor
 public class BoxTypeEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -30,5 +34,6 @@ public class BoxTypeEntity implements Serializable {
     private double length;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "boxTypeEntity")
     @JsonIgnore
+    @Builder.Default
     private Set<InventoryEntity> inventoryEntities = new HashSet<>(0);
 }
