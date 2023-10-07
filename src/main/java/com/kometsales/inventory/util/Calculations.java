@@ -3,12 +3,16 @@ package com.kometsales.inventory.util;
 import com.kometsales.inventory.entity.CustomerEntity;
 import com.kometsales.inventory.entity.InventoryEntity;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Calculations {
+
+    public static final String DECIMAL_PATTERN = "#.##";
+    public static DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_PATTERN);
 
     public static double getFinalFreight(InventoryEntity inventoryEntity){
         double width = inventoryEntity.getBoxTypeEntity().getWidth();
@@ -22,14 +26,14 @@ public class Calculations {
         double cubesPerBox = (width * height * length) / 1728;
         double outboundFreight = (cubesPerCarrier * cubesPerBox) / pack;
         double finalFreight = outboundFreight * (freshCutValue / 100);
-        return finalFreight;
+        return Double.parseDouble(decimalFormat.format(finalFreight));
     }
 
     public static double getPrice(InventoryEntity inventoryEntity, CustomerEntity customerEntity){
         double basePrice = inventoryEntity.getBasePrice();
         double markdown = customerEntity.getMarkdown();
         double price = basePrice - (basePrice * (markdown / 100));
-        return price;
+        return Double.parseDouble(decimalFormat.format(price));
     }
 
     public static String getCode(String productName){
