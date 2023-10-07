@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -19,7 +18,7 @@ public class InventoryEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private Integer id;
+    private int id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boxTypeId", nullable = false)
     private BoxTypeEntity boxTypeEntity;
@@ -30,9 +29,9 @@ public class InventoryEntity implements Serializable {
     @JoinColumn(name = "productId", nullable = false)
     private ProductEntity productEntity;
     @Column(name = "cubesPerCarrier", nullable = false, scale = 5)
-    private BigDecimal cubesPerCarrier;
+    private double cubesPerCarrier;
     @Column(name = "pack", nullable = false)
-    private Integer pack;
+    private int pack;
     @Column(name = "basePrice", nullable = false, precision = 10, scale = 5)
-    private BigDecimal basePrice;
+    private double basePrice;
 }

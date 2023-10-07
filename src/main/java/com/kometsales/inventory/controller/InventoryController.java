@@ -6,6 +6,7 @@ import com.kometsales.inventory.dto.ProductCustomerDTO;
 import com.kometsales.inventory.service.InventoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,17 +18,20 @@ public class InventoryController {
     private InventoryServiceImpl inventoryServiceImpl;
 
     @GetMapping("/company/{companyId}")
-    public ProductCompanyDTO getProductsByCompanyId(int companyId){
+    public ProductCompanyDTO getProductsByCompanyId(@PathVariable("companyId") Integer companyId){
+        System.out.print(companyId);
         return inventoryServiceImpl.getProductsByCompanyId(companyId);
     }
 
     @GetMapping("/customer/{customerId}")
-    public ProductCustomerDTO getProductsByCustomerId(int customerId){
+    public ProductCustomerDTO getProductsByCustomerId(@PathVariable("customerId") Integer customerId){
+        System.out.print(customerId);
         return inventoryServiceImpl.getProductsByCustomerId(customerId);
     }
 
     @GetMapping("/codes/{companyId}")
-    public ProductCodeDTO getProductCodesByCompanyId(int companyId){
+    public ProductCodeDTO getProductCodesByCompanyId(@PathVariable("companyId") Integer companyId){
+        System.out.print(companyId);
         return inventoryServiceImpl.getProductCodesByCompanyId(companyId);
     }
 }

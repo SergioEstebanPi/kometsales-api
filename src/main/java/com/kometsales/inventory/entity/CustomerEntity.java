@@ -16,9 +16,9 @@ public class CustomerEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
-    private Integer id;
+    private int id;
     @Column(name = "name", length = 80)
     private String name;
     @Column(name = "markdown", nullable = false, precision = 5)
-    private Double markdown;
+    private double markdown;
 }
