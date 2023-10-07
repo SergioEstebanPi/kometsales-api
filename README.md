@@ -45,10 +45,13 @@ password: NA
 
 ## Responses
 
+### 1
 <img width="456" alt="image" src="https://github.com/SergioEstebanPi/kometsales-api/assets/17394456/873c9bc0-aadb-4602-bd48-18d8568990bd">
 
+### 2
 <img width="456" alt="image" src="https://github.com/SergioEstebanPi/kometsales-api/assets/17394456/3b812fb0-e472-46ac-ad50-bb99cf357198">
 
+### 3
 <img width="456" alt="image" src="https://github.com/SergioEstebanPi/kometsales-api/assets/17394456/58cda0bf-8a92-4872-94d7-4912297757ab">
 
 
