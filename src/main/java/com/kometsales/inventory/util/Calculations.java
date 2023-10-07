@@ -14,13 +14,17 @@ public class Calculations {
     public static final String DECIMAL_PATTERN = "#.##";
     public static DecimalFormat decimalFormat = new DecimalFormat(DECIMAL_PATTERN);
 
-    public static double getFinalFreight(InventoryEntity inventoryEntity){
+    public static double getFinalFreight(InventoryEntity inventoryEntity) {
+        int pack = inventoryEntity.getPack();
+        if(pack == 0){
+            throw new NumberFormatException("Division por cero no admitida");
+        }
+
         double width = inventoryEntity.getBoxTypeEntity().getWidth();
         double height = inventoryEntity.getBoxTypeEntity().getHeight();
         double length = inventoryEntity.getBoxTypeEntity().getLength();
 
         double cubesPerCarrier = inventoryEntity.getCubesPerCarrier();
-        int pack = inventoryEntity.getPack();
         double freshCutValue = inventoryEntity.getProductEntity().getFreshCutValue();
 
         double cubesPerBox = (width * height * length) / 1728;
@@ -41,8 +45,8 @@ public class Calculations {
         String space = " ";
         String[] words = productName.split(space);
         productCode = Arrays.stream(words)
-                    .map(w -> getWordCode(w) + space)
-                    .collect(Collectors.joining());
+                .map(w -> getWordCode(w) + space)
+                .collect(Collectors.joining());
         return productCode.replace(space, "-")
                 .substring(0, productCode.length() - 1);
     }
@@ -66,10 +70,10 @@ public class Calculations {
                         .count();
                 break;
         }
-        Pattern regex = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Pattern regex = Pattern.compile("[^a-zA-Z0-9]");
         Matcher m = regex.matcher(inner);
         while(m.find()) {
-            wordCode += word.charAt(m.start());
+            wordCode += inner.charAt(m.start());
         }
         wordCode += word.substring(length - 1, length);
         return wordCode;

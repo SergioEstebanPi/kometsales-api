@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -68,6 +67,7 @@ class InventoryServiceImplTest {
         Stream<InventoryEntity> inventoryEntities = Stream.of(
                 InventoryEntity.builder()
                         .companyEntity(CompanyEntity.builder().id(1).name("company test").build())
+                        .productEntity(ProductEntity.builder().name("Product 1").freshCutValue(15.0).build())
                         .basePrice(1.3).build());
         given(jpaStreamer.stream(InventoryEntity.class))
                 .willReturn(inventoryEntities);

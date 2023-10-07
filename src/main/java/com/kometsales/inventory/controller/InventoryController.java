@@ -18,20 +18,17 @@ public class InventoryController {
     private InventoryServiceImpl inventoryServiceImpl;
 
     @GetMapping("/company/{companyId}")
-    public ProductCompanyDTO getProductsByCompanyId(@PathVariable("companyId") Integer companyId){
-        System.out.print(companyId);
+    public ProductCompanyDTO getProductsByCompanyId(@PathVariable("companyId") Integer companyId) {
         return inventoryServiceImpl.getProductsByCompanyId(companyId);
     }
 
     @GetMapping("/customer/{customerId}")
     public ProductCustomerDTO getProductsByCustomerId(@PathVariable("customerId") Integer customerId){
-        System.out.print(customerId);
         return inventoryServiceImpl.getProductsByCustomerId(customerId);
     }
 
     @GetMapping("/codes/{companyId}")
     public ProductCodeDTO getProductCodesByCompanyId(@PathVariable("companyId") Integer companyId){
-        System.out.print(companyId);
         return inventoryServiceImpl.getProductCodesByCompanyId(companyId);
     }
 }
