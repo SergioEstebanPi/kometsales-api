@@ -1,7 +1,10 @@
 package com.kometsales.inventory.service;
 
 import com.kometsales.inventory.dto.*;
+import com.kometsales.inventory.entity.InventoryEntity;
 import com.kometsales.inventory.repository.*;
+import com.kometsales.inventory.util.Calculations;
+import com.speedment.jpastreamer.application.JPAStreamer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,35 +28,32 @@ public class InventoryServiceImpl implements InventoryService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private JPAStreamer jpaStreamer;
+
     public ProductCompanyDTO getProductsByCompanyId(int companyId){
-        ProductCompanyDTO productCompanyDTO = new ProductCompanyDTO();
+        ProductCompanyDTO productCompanyDTO = ProductCompanyDTO.builder().build();
         productCompanyDTO.setCompanyId(companyId);
 
-        List<ProductCompanyItemDTO> productCompanyItemDTOList = inventoryRepository.findAll()
-                .stream()
+        List<ProductCompanyItemDTO> productCompanyItemDTOList = jpaStreamer.stream(InventoryEntity.class)
                 .filter(inventoryEntity -> inventoryEntity.getCompanyEntity().getId() == companyId)
-                .map(inventoryEntity -> {
-                    String name = inventoryEntity.getProductEntity().getName();
-                    double finalFreight = 0.0;
-                    String basePrice = "";
-                    ProductCompanyItemDTO productCompanyItemDTO = new ProductCompanyItemDTO();
-                    productCompanyItemDTO.setProductName(name);
-                    productCompanyItemDTO.setBasePrice(basePrice);
-                    productCompanyItemDTO.setFinalFreight(finalFreight);
-                    return productCompanyItemDTO;
-                })
+                .map(inventoryEntity -> ProductCompanyItemDTO.builder()
+                        .productName(inventoryEntity.getProductEntity().getName())
+                        .basePrice(String.valueOf(inventoryEntity.getBasePrice()))
+                        .finalFreight(Calculations.getFinalFreight(inventoryEntity))
+                        .build())
                 .toList();
         productCompanyDTO.setProductCompanyItemDTOList(productCompanyItemDTOList);
         return productCompanyDTO;
     }
 
     public ProductCustomerDTO getProductsByCustomerId(int customerId){
-        ProductCustomerDTO productCustomerDTO = new ProductCustomerDTO();
+        ProductCustomerDTO productCustomerDTO = ProductCustomerDTO.builder().build();
         return productCustomerDTO;
     }
 
     public ProductCodeDTO getProductCodesByCompanyId(int companyId){
-        ProductCodeDTO productCodeDTO = new ProductCodeDTO();
+        ProductCodeDTO productCodeDTO = ProductCodeDTO.builder().build();
         return productCodeDTO;
     }
 
