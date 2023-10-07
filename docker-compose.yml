@@ -8,7 +8,14 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/kometsales?autoReconnect=true&useSSL=false
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://mysql:3306/kometsales?allowPublicKeyRetrieval=true&useSSL=false",
+        "spring.datasource.username" : "root",
+        "spring.datasource.password" : "root",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQLDialect",
+        "spring.jpa.properties.hibernate.naming.physical-strategy": "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl",
+        "spring.jpa.hibernate.ddl-auto" : "none"
+      }'
     restart: always
     depends_on:
       - mysql
