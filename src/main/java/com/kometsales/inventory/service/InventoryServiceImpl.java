@@ -3,7 +3,6 @@ package com.kometsales.inventory.service;
 import com.kometsales.inventory.dto.*;
 import com.kometsales.inventory.entity.CustomerEntity;
 import com.kometsales.inventory.entity.InventoryEntity;
-import com.kometsales.inventory.repository.*;
 import com.kometsales.inventory.util.Calculations;
 import com.speedment.jpastreamer.application.JPAStreamer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,21 +13,6 @@ import java.util.List;
 
 @Service
 public class InventoryServiceImpl implements InventoryService {
-
-    @Autowired
-    private BoxTypeRepository boxTypeRepository;
-
-    @Autowired
-    private CompanyRepository companyRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    private InventoryRepository inventoryRepository;
-
-    @Autowired
-    private ProductRepository productRepository;
 
     @Autowired
     private JPAStreamer jpaStreamer;
@@ -45,7 +29,7 @@ public class InventoryServiceImpl implements InventoryService {
                         .finalFreight(Calculations.getFinalFreight(inventoryEntity))
                         .build())
                 .toList();
-        productCompanyDTO.setProductCompanyItemDTOList(productCompanyItemDTOList);
+        productCompanyDTO.setProducts(productCompanyItemDTOList);
         return productCompanyDTO;
     }
 
@@ -63,22 +47,22 @@ public class InventoryServiceImpl implements InventoryService {
                                 .findFirst().get()))
                         .build())
                 .toList();
-        productCustomerDTO.setProductCustomerItemDTOList(products);
+        productCustomerDTO.setProducts(products);
         return productCustomerDTO;
     }
 
     public ProductCodeDTO getProductCodesByCompanyId(int companyId){
         ProductCodeDTO productCodeDTO = ProductCodeDTO.builder().build();
 
-        List<ProductCodeItemDTO> products = new ArrayList<>();
-        jpaStreamer.stream(InventoryEntity.class)
+        List<ProductCodeItemDTO> products = jpaStreamer.stream(InventoryEntity.class)
+                .filter(inventoryEntity -> inventoryEntity.getCompanyEntity().getId() == companyId)
                 .map(inventoryEntity -> ProductCodeItemDTO.builder()
                         .productName(inventoryEntity.getProductEntity().getName())
                         .productCode(Calculations.getCode(inventoryEntity.getProductEntity().getName()))
                         .build())
                 .toList();
 
-        productCodeDTO.setProductCodeItemDTOList(products);
+        productCodeDTO.setProducts(products);
         return productCodeDTO;
     }
 
