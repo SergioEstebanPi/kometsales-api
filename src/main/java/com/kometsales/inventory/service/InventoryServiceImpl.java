@@ -18,6 +18,7 @@ public class InventoryServiceImpl implements InventoryService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private InventoryRepository inventoryRepository;
 
