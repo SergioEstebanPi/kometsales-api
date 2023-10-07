@@ -2,9 +2,11 @@ package com.kometsales.inventory.service;
 
 import com.kometsales.inventory.dto.ProductCodeDTO;
 import com.kometsales.inventory.dto.ProductCompanyDTO;
+import com.kometsales.inventory.dto.ProductCompanyItemDTO;
 import com.kometsales.inventory.dto.ProductCustomerDTO;
 import com.kometsales.inventory.entity.InventoryEntity;
 import com.kometsales.inventory.repository.*;
+import com.speedment.jpastreamer.application.JPAStreamer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,6 +24,9 @@ class InventoryServiceImplTest {
     @Mock
     private InventoryRepository inventoryRepository;
 
+    @Mock
+    private JPAStreamer jpaStreamer;
+
     @InjectMocks
     private InventoryServiceImpl inventoryService;
 
@@ -34,6 +39,8 @@ class InventoryServiceImplTest {
     void getProductsByCompanyId() {
         // given - precondition or setup
         List<InventoryEntity> inventoryEntities = new ArrayList<>();
+        List<ProductCompanyItemDTO> productCompanyItemDTOList = new ArrayList<>();
+        //given(jpaStreamer.stream(InventoryEntity.class)).willReturn(productCompanyItemDTOList);
         //given(inventoryRepository.findByCompanyId(1))
         //        .willReturn(inventoryEntities);
 
@@ -43,9 +50,16 @@ class InventoryServiceImplTest {
         // when -  action or the behaviour that we are going test
         ProductCompanyDTO productCompanyDTO = inventoryService.getProductsByCompanyId(1);
 
+        List<ProductCompanyItemDTO> list = productCompanyDTO.getProductCompanyItemDTOList();
+
         System.out.println(productCompanyDTO);
         // then - verify the output
         assertThat(productCompanyDTO).isNotNull();
+        assertThat(list.size()).isNotZero();
+        assertThat(list.get(0).getFinalFreight()).isEqualTo(3.0701625000000003);
+        assertThat(list.get(1).getFinalFreight()).isEqualTo(1.8783299999999998);
+        assertThat(list.get(2).getFinalFreight()).isEqualTo(9.079706250000001);
+        assertThat(list.get(4).getFinalFreight()).isEqualTo(19.126863);
     }
 
     @Test

@@ -3,6 +3,11 @@ package com.kometsales.inventory.util;
 import com.kometsales.inventory.entity.CustomerEntity;
 import com.kometsales.inventory.entity.InventoryEntity;
 
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
 public class Calculations {
 
     public static double getFinalFreight(InventoryEntity inventoryEntity){
@@ -25,5 +30,44 @@ public class Calculations {
         double markdown = customerEntity.getMarkdown();
         double price = basePrice - (basePrice * (markdown / 100));
         return price;
+    }
+
+    public static String getCode(String productName){
+        String productCode = "";
+        String space = " ";
+        String[] words = productName.split(space);
+        productCode = Arrays.stream(words)
+                    .map(w -> getWordCode(w) + space)
+                    .collect(Collectors.joining());
+        return productCode.replace(space, "-")
+                .substring(0, productCode.length() - 1);
+    }
+
+    private static String getWordCode(String word){
+        String wordCode = "";
+        wordCode += word.substring(0, 1);
+        int length = word.length();
+        String inner = word.substring(1, length - 1);
+        switch (length) {
+            case 2:
+                wordCode += '0';
+                break;
+            case 3:
+                wordCode += '1';
+                break;
+            default:
+                wordCode += inner.chars()
+                        .mapToObj(c -> (char) c)
+                        .distinct()
+                        .count();
+                break;
+        }
+        Pattern regex = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher m = regex.matcher(inner);
+        while(m.find()) {
+            wordCode += word.charAt(m.start());
+        }
+        wordCode += word.substring(length - 1, length);
+        return wordCode;
     }
 }
